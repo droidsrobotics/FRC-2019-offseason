@@ -63,7 +63,7 @@ public class OI {
         joystick1 = new Joystick(0);
         
         joystickButton1 = new JoystickButton(joystick1, 4);
-        joystickButton1.whileHeld(new MoveForward());
+        joystickButton1.whileHeld(new GyroMoveStraight());
 
 
         // SmartDashboard Buttons
