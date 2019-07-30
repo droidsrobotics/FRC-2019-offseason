@@ -17,10 +17,14 @@ camid = str(sys.argv[1])
 cam = cv2.VideoCapture(int(camid))
 print("init camera on /dev/video"+camid)
 #os.system('v4l2-ctl --set-ctrl=exposure_auto=3 -d /dev/video'+camid)
+
+xdim = 320
+ydim = 240
+
 cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)
 cam.set(cv2.CAP_PROP_EXPOSURE,.001);
-cam.set(cv2.CAP_PROP_FRAME_WIDTH,640);
-cam.set(cv2.CAP_PROP_FRAME_HEIGHT,480);
+cam.set(cv2.CAP_PROP_FRAME_WIDTH,xdim);
+cam.set(cv2.CAP_PROP_FRAME_HEIGHT,ydim);
 
 # # set up network socket/addresses
 # host = 'localhost'
@@ -38,8 +42,7 @@ xtarget = 0
 kernelOpen=np.ones((5,5))
 kernelClose=np.ones((20,20))
 # allow the camera to warmup
-xdim = 320*2
-ydim = 240*2
+
 
 
 def SendToRobot(left, right, error, P, I, D):
@@ -108,7 +111,7 @@ while True:
     imgHSV = cv2.cvtColor(full_img,cv2.COLOR_BGR2HSV)
     key = cv2.waitKey(1) & 0xFF
 
-    targets = FindColor(lower_green, upper_green, 200)
+    targets = FindColor(lower_green, upper_green, 70)
 
     slopes = []
     yints = []
