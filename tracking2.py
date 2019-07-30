@@ -66,7 +66,7 @@ def FindColor(lower_col, upper_col, min_area):
     # this removes noise by eroding and filling in
     maskOpen=cv2.morphologyEx(mask,cv2.MORPH_OPEN,kernelOpen)
     maskClose=cv2.morphologyEx(maskOpen,cv2.MORPH_CLOSE,kernelClose)
-    conts, h = cv2.findContours(maskClose, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    a, conts, h = cv2.findContours(maskClose, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     # Finding bigest  area and save the contour
     targets = []
     for cont in conts:
