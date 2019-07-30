@@ -1,6 +1,6 @@
 # import the necessary packages
 
-import time,sys,os
+import time,sys
 import cv2
 
 import numpy as np
@@ -22,16 +22,12 @@ robot_address = (host, Rport)
 camid = "0"
 cam = cv2.VideoCapture(int(camid))
 print("init camera on /dev/video"+camid)
-#os.system('v4l2-ctl --set-ctrl=exposure_auto=3 -d /dev/video'+camid)
-cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)
-cam.set(cv2.CAP_PROP_EXPOSURE,.005);
 
-#cam.set(cv2.CAP_PROP_EXPOSURE,12);
+cam.set(cv2.CAP_PROP_EXPOSURE,12);
 
 x_min2 = 0
 x_min = 0
-buffer = 40
-xtarget = 0
+buffer = 60
 
 kernelOpen=np.ones((5,5))
 kernelClose=np.ones((20,20))
@@ -76,16 +72,39 @@ def FindColor(imageHSV, lower_col, upper_col, min_area):
     # this removes noise by eroding and filling in
     maskOpen=cv2.morphologyEx(mask,cv2.MORPH_OPEN,kernelOpen)
     maskClose=cv2.morphologyEx(maskOpen,cv2.MORPH_CLOSE,kernelClose)
-    a, conts, h = cv2.findContours(maskClose, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    conts, h = cv2.findContours(maskClose, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     # Finding bigest  area and save the contour
     max_area = 0
     max_area2 = 0
-    targets = []
     for cont in conts:
         area = cv2.contourArea(cont)
-        if area > min_area:
-            targets.append(cont)
-    return targets
+        if area > max_area:
+            max_area = area
+            gmax = max_area
+            best_cont = cont
+    for cont in conts:
+        area = cv2.contourArea(cont)
+        if area > max_area2 and area != max_area:
+            max_area2 = area
+            gmax2 = max_area2
+            best_cont2 = cont
+    # identify the middle of the biggest  region
+    if conts and max_area > min_area and max_area2 > min_area:
+        M = cv2.moments(best_cont)
+        cx,cy = int(M['m10']/M['m00']),int(M['m01']/M['m00'])
+        M2 = cv2.moments(best_cont2)
+        cx2,cy2 = int(M2['m10']/M['m00']),int(M2['m01']/M['m00'])
+        return best_cont, cx, cy, max_area, best_cont2, cx2, cy2, max_area2, conts
+    elif conts and max_area > min_area:
+        M = cv2.moments(best_cont)
+        cx,cy = int(M['m10']/M['m00']),int(M['m01']/M['m00'])
+        return best_cont, cx, cy, max_area, 0,-1,-1,-1, conts
+    elif max_area2 > min_area:
+        M2 = cv2.moments(best_cont2)
+        cx2,cy2 = int(M2['m10']/M['m00']),int(M2['m01']/M['m00'])
+        return 0,-1,-1,-1, best_cont2, cx2, cy2, max_area2, conts
+    else:
+        return 0,-1,-1,-1,0,-1,-1,-1, conts
 
 
 lastTime = time.time()
@@ -119,7 +138,7 @@ while True:
 #        hsv = img
         hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
         if thiscol == "black":
-            cv2.putText(img, str("CLICK ON target"), (10, 50), cv2.FONT_HERSHEY_PLAIN, 2, (20, 255, 255), 2)            
+            cv2.putText(img, str("CLICK ON BLACK"), (10, 50), cv2.FONT_HERSHEY_PLAIN, 2, (20, 255, 255), 2)            
         if colors:
             cv2.putText(img, str(colors[-1]), (10, 100), cv2.FONT_HERSHEY_PLAIN, 2, (20, 255, 255), 2)
         cv2.imshow('frame', img)
@@ -146,44 +165,44 @@ while True:
 
     cv2.imshow("robotimgPi", full_img)
 
-    cam.set(cv2.CAP_PROP_EXPOSURE,0.005);
     ret, img=cam.read()
-    dark_img=cv2.resize(img,(xdim,ydim))
+    cap_img=cv2.resize(img,(xdim,ydim))
 
-    cam.set(cv2.CAP_PROP_EXPOSURE,.03);
-    ret, full_img=cam.read()
-
-    #dark_img = full_img
+    full_img = cap_img
+    #full_img=cv2.resize(cap_img,(xdim,ydim))
 #    cv2.imshow("1",full_img)
 
-    imgHSV = cv2.cvtColor(dark_img,cv2.COLOR_BGR2HSV)
+    imgHSV = cv2.cvtColor(full_img,cv2.COLOR_BGR2HSV)
     imgHSV_crop = imgHSV
 #    imgHSV_crop = imgHSV[200:280, 0:320]
 
     key = cv2.waitKey(1) & 0xFF
 
-    targets = FindColor(imgHSV_crop, lower_black, upper_black, 200)
+    best_blackcont, blackcx_incrop, blackcy_incrop, blackarea, best_blackcont2, blackcx_incrop2, blackcy_incrop2, blackarea2, conts = FindColor(imgHSV_crop, lower_black, upper_black, 10)
 
-    slopes = []
-    yints = []
-    heights = []
-    xpos = []
-    
-    for cont in targets:
+
+
+    if (blackcx_incrop == -1 and blackcx_incrop2 == -1):
+        print best_blackcont, blackcx_incrop, blackcy_incrop, blackarea, best_blackcont2, blackcx_incrop2, blackcy_incrop2, blackarea2
+        # if robot not found --> done
+        #print("P, I, D, (E), (T) --->", 0, 0, 0, 0, time.time())
+        SendToRobot(0,0,0,0,0,0)
+        continue
+
+    #ctr = full_img.copy()
+    #cv2.drawContours(ctr,best_blackcont+[0,200],-1,(0,255,0),3)
+#    cv2.imshow("2",ctr)
+
+    if (blackcx_incrop != -1):
         # create a rectangle to represent the line and find
         # the angle of the rectangle on the screen.
-        blackbox = cv2.minAreaRect(cont)
+        blackbox = cv2.minAreaRect(best_blackcont)
 
 
         rows,cols = full_img.shape[:2]
-        [vx,vy,x,y] = cv2.fitLine(cont, cv2.DIST_L2,0,0.01,0.01)
+        [vx,vy,x,y] = cv2.fitLine(best_blackcont, cv2.DIST_L2,0,0.01,0.01)
         lefty = int((-x*vy/vx) + y)
         righty = int(((cols-x)*vy/vx)+y)
-
-        slope = float(righty-lefty)/((cols-1)-0)
-        slopes.append(slope)
-        yints.append(lefty)
-        
         try:
             cv2.line(full_img,(cols-1,righty),(0,lefty),(255,0,0),2)
         except:
@@ -205,37 +224,36 @@ while True:
         # draw line with the estimate of location and angle
         cv2.line(full_img, (int(x_min),int(y_min)), (xdim/2,ydim), (200,0,200),2)
         cv2.circle(full_img,(int(x_min),int(y_min)),3,(200,0,200),-1)
-
-        heights.append(y_min)
-        xpos.append(x_min)
-        
         #    cv2.line(full_img, (int(x_min),int(y_min+200)), (160,40+200), (200,0,200),2)
         #    cv2.circle(full_img,(int(x_min),int(y_min+200)),3,(200,0,200),-1)
 
+    if (blackcx_incrop2 != -1):
+        blackbox2 = cv2.minAreaRect(best_blackcont2)
+        (x_min2, y_min2), (w_min2, h_min2), lineang2 = blackbox2
 
-    cnt = 0
-    while cnt < len(slopes):
-        cnt2 = 0
-        while cnt2 < len(slopes):
-            if slopes[cnt2]-slopes[cnt] !=0:
-                dx = (yints[cnt]-yints[cnt2])/(slopes[cnt2]-slopes[cnt])
-                dy = slopes[cnt2] * dx + yints[cnt2]
-                if dy < heights[cnt] and dy < heights[cnt2]:
-                    cv2.circle(full_img,(int(dx),int(dy)),5,(200,200,200),-1)
-                    cv2.circle(full_img,(int((xpos[cnt]+xpos[cnt2])/2),int((heights[cnt]+heights[cnt2])/2.0)),5,(200,200,200),-1)
-                    cv2.line(full_img, (int((xpos[cnt]+xpos[cnt2])/2),int((heights[cnt]+heights[cnt2])/2.0)), (xdim/2,ydim), (200,200,200),2)
-                    xtarget = (xpos[cnt]+xpos[cnt2])/2 - xdim/2
-                else:
-                    cv2.circle(full_img,(int(dx),int(dy)),5,(200,200,0),-1)
-            if len(slopes) == 1:
-                cv2.circle(full_img,(int(xpos[cnt]),int((heights[cnt]))),5,(200,200,200),-1)
-                cv2.line(full_img, (int(xpos[cnt]),int(heights[cnt])), (xdim/2,ydim), (200,200,200),2)
-                xtarget = xpos[cnt] - xdim/2
-            cnt2 = cnt2 + 1
-        cnt = cnt + 1
-    cv2.putText(full_img, "dx="+str(xtarget), (10, 50), cv2.FONT_HERSHEY_PLAIN, 2, (20, 255, 255), 2)
+        rows2,cols2 = full_img.shape[:2]
+        [vx2,vy2,x2,y2] = cv2.fitLine(best_blackcont2, cv2.DIST_L2,0,0.01,0.01)
+        lefty2 = int((-x2*vy2/vx2) + y2)
+        righty2 = int(((cols2-x2)*vy2/vx2)+y2)
+
+        try:
+            cv2.line(full_img,(cols2-1,righty2),(0,lefty2),(255,0,0),2)
+        except:
+            pass
+        
+        blackbox2 = (x_min2, y_min2), (w_min2, h_min2), lineang2
+        drawblackbox2 = cv2.boxPoints(blackbox2)
+        drawblackbox2 = np.int0(drawblackbox2)
+        cv2.drawContours(full_img,[drawblackbox2],-1,(0,255,0),3)
+        #    cv2.imshow("3",full_img)
+
+        # draw line with the estimate of location and angle
+        cv2.line(full_img, (int(x_min2),int(y_min2)), (xdim/2,ydim), (200,0,200),2)
+        cv2.circle(full_img,(int(x_min2),int(y_min2)),3,(200,0,200),-1)
+
+
     
-    """
+
     if (blackcx_incrop != -1 and blackcx_incrop2 != -1):
         x_min_avg = (x_min+x_min2)/2
     elif (blackcx_incrop != -1 and blackcx_incrop2 == -1):
@@ -264,18 +282,14 @@ while True:
 
     print (dx, dy)
     
-    """
-
-    print("dx="+str(xtarget))
     
-    deltaX = xtarget
+    deltaX = 0.333*(160-x_min)
 
 
     P_fix = deltaX
     I_fix = P_fix+0.9*I_fix
     D_fix = P_fix-lastP_fix
     lastP_fix = P_fix
-    blackarea = 100 # temp
     error = 100*blackarea/5500
     #print("P, I, D, (E), (T) --->", P_fix, I_fix, D_fix, error, time.time())
 
