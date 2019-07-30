@@ -19,6 +19,8 @@ print("init camera on /dev/video"+camid)
 #os.system('v4l2-ctl --set-ctrl=exposure_auto=3 -d /dev/video'+camid)
 cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)
 cam.set(cv2.CAP_PROP_EXPOSURE,.001);
+cam.set(cv2.CAP_PROP_FRAME_WIDTH,640);
+cam.set(cv2.CAP_PROP_FRAME_HEIGHT,480);
 
 # # set up network socket/addresses
 # host = 'localhost'
@@ -55,9 +57,10 @@ def SendToRobot(left, right, error, P, I, D):
           except:
                   print("FAILED.....Giving up :-(")
 
-def FindColor(imageHSV, lower_col, upper_col, min_area):
+def FindColor(lower_col, upper_col, min_area):
+    global imgHSV
     # find the colored regions
-    mask=cv2.inRange(imageHSV,lower_col,upper_col)
+    mask=cv2.inRange(imgHSV,lower_col,upper_col)
 #    cv2.imshow("mask",mask)
 
     # this removes noise by eroding and filling in
@@ -65,8 +68,6 @@ def FindColor(imageHSV, lower_col, upper_col, min_area):
     maskClose=cv2.morphologyEx(maskOpen,cv2.MORPH_CLOSE,kernelClose)
     conts, h = cv2.findContours(maskClose, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     # Finding bigest  area and save the contour
-    max_area = 0
-    max_area2 = 0
     targets = []
     for cont in conts:
         area = cv2.contourArea(cont)
@@ -107,7 +108,7 @@ while True:
     imgHSV = cv2.cvtColor(full_img,cv2.COLOR_BGR2HSV)
     key = cv2.waitKey(1) & 0xFF
 
-    targets = FindColor(imgHSV, lower_green, upper_green, 200)
+    targets = FindColor(lower_green, upper_green, 200)
 
     slopes = []
     yints = []
