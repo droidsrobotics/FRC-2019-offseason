@@ -4,9 +4,9 @@ import time,sys,os
 import cv2
 
 # initialize the camera
-camid = "0"
+camid = "1"
 cam = cv2.VideoCapture(int(camid))
-print("init camera on /dev/video"+camid)
+#print("init camera on /dev/video"+camid)
 #os.system('v4l2-ctl --set-ctrl=exposure_auto=3 -d /dev/video'+camid)
 cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)
 
@@ -18,9 +18,6 @@ while True:
         cam.set(cv2.CAP_PROP_EXPOSURE,.03);
         ret, cap2_img=cam.read()
         cv2.imshow('bright', cap2_img)
-        
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-
-
-
