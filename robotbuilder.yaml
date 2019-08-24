@@ -34,6 +34,18 @@ Children:
     Base: Subsystem
     Name: Gyro
   - Children:
+    - Children: []
+      Properties:
+        CAN ID: !!robotbuilder.data.properties.ChoicesProperty
+          choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+            '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23',
+            '24', '25', '26', '27', '28', '29', '30', '31']
+          default: '2'
+          name: CAN ID
+          validators: [CANID]
+          value: '0'
+      Base: Spark MAX
+      Name: Spark MAX 1
     - Children:
       - Children:
         - Children: []
@@ -402,10 +414,10 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: CVReciever}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id005 []
+        default: []
         name: Parameter presets
         validators: null
-        value: *id005
+        value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
@@ -431,10 +443,10 @@ Properties:
     name: Export Subsystems, validators: null, value: true}
   Simulation World File: !!robotbuilder.data.properties.StringProperty {default: /usr/share/frcsim/worlds/GearsBotDemo.world,
     name: Simulation World File, validators: null, value: /usr/share/frcsim/worlds/GearsBotDemo.world}
-  Wiring file location: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\sanja\',
+  Wiring file location: !!robotbuilder.data.properties.FileProperty {default: /home/droids/,
     extension: null, folder: true, name: Wiring file location, validators: null, value: 'C:\Users\sanjay\'}
-  Export Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\sanja\FRCProjects',
-    extension: null, folder: true, name: Export Directory, validators: null, value: .\}
+  Export Directory: !!robotbuilder.data.properties.FileProperty {default: /home/droids/FRCProjects,
+    extension: null, folder: true, name: Export Directory, validators: null, value: ./}
   Autonomous Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
     name: Autonomous Command, type: Command, validators: null, value: Autonomous Command}
 Base: Robot
