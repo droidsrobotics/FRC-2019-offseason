@@ -70,8 +70,8 @@ public class Gyro extends Subsystem {
     }
 
     public double getYaw() {
-        double x;   
-        double curAngle = this.readAngle(); 
+        double x;
+        double curAngle = this.readAngle();
         if ((curAngle)%360 < 0) {
           x = 360 + (curAngle)%360;
         }
