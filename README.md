@@ -1,5 +1,3 @@
-# FRC-2020
+# FRC-2019-Offseason
 
-Code for the 2020 FRC Challenge
-help
- tests2
+Code for the 2019 FRC Challenge in the offseason
