@@ -46,7 +46,13 @@ Children:
               name: CAN ID
               validators: &id002 [CANID]
               value: '1'
-          Base: Talon SRX
+            Motor Type: !!robotbuilder.data.properties.ChoicesProperty
+              choices: &id003 [MotorType.kBrushless]
+              default: MotorType.kBrushless
+              name: Motor Type
+              validators: &id004 [MotorType]
+              value: MotorType.kBrushless
+          Base: Spark MAX
           Name: driveLeftRear
         - Children: []
           Properties:
@@ -56,7 +62,13 @@ Children:
               name: CAN ID
               validators: *id002
               value: '2'
-          Base: Talon SRX
+            Motor Type: !!robotbuilder.data.properties.ChoicesProperty
+              choices: *id003
+              default: MotorType.kBrushless
+              name: Motor Type
+              validators: *id004
+              value: MotorType.kBrushless
+          Base: Spark MAX
           Name: driveLeftFront
         Properties:
           SpeedController4: !!robotbuilder.data.properties.ChildSelectionProperty {
@@ -69,16 +81,16 @@ Children:
             default: 1
             name: SpeedController2
             type: PIDOutput
-            validators: &id003 [SpeedControllerGroup, ChildDropdownSelected]
-            value: driveLeftFront
+            validators: &id005 [SpeedControllerGroup, ChildDropdownSelected]
+            value: driveLeftRear
           SpeedController1: !!robotbuilder.data.properties.ChildSelectionProperty
             default: 0
             name: SpeedController1
             type: PIDOutput
-            validators: &id004 [SpeedControllerGroup, ChildDropdownSelected]
-            value: driveLeftRear
+            validators: &id006 [SpeedControllerGroup, ChildDropdownSelected]
+            value: driveLeftFront
         Base: Speed Controller Group
-        Name: Speed Controller Group 1
+        Name: Speed Controller Group Left
       - Children:
         - Children: []
           Properties:
@@ -88,7 +100,13 @@ Children:
               name: CAN ID
               validators: *id002
               value: '3'
-          Base: Talon SRX
+            Motor Type: !!robotbuilder.data.properties.ChoicesProperty
+              choices: *id003
+              default: MotorType.kBrushless
+              name: Motor Type
+              validators: *id004
+              value: MotorType.kBrushless
+          Base: Spark MAX
           Name: driveRightFront
         - Children: []
           Properties:
@@ -98,7 +116,13 @@ Children:
               name: CAN ID
               validators: *id002
               value: '4'
-          Base: Talon SRX
+            Motor Type: !!robotbuilder.data.properties.ChoicesProperty
+              choices: *id003
+              default: MotorType.kBrushless
+              name: Motor Type
+              validators: *id004
+              value: MotorType.kBrushless
+          Base: Spark MAX
           Name: driveRightRear
         Properties:
           SpeedController4: !!robotbuilder.data.properties.ChildSelectionProperty {
@@ -111,23 +135,23 @@ Children:
             default: 1
             name: SpeedController2
             type: PIDOutput
-            validators: *id003
-            value: driveRightFront
+            validators: *id005
+            value: driveRightRear
           SpeedController1: !!robotbuilder.data.properties.ChildSelectionProperty
             default: 0
             name: SpeedController1
             type: PIDOutput
-            validators: *id004
-            value: driveRightRear
+            validators: *id006
+            value: driveRightFront
         Base: Speed Controller Group
-        Name: Speed Controller Group 2
+        Name: Speed Controller Group Right
       Properties:
         Right Motor: !!robotbuilder.data.properties.ChildSelectionProperty
           default: 1
           name: Right Motor
           type: PIDOutput
           validators: [RobotDrive2, ChildDropdownSelected]
-          value: Speed Controller Group 2
+          value: driveLeftRear
         Maximum Output: !!robotbuilder.data.properties.DoubleProperty {default: 1,
           name: Maximum Output, validators: null, value: 1.0}
         Left Motor: !!robotbuilder.data.properties.ChildSelectionProperty
@@ -135,13 +159,13 @@ Children:
           name: Left Motor
           type: PIDOutput
           validators: [RobotDrive2, ChildDropdownSelected]
-          value: Speed Controller Group 1
+          value: Speed Controller Group Left
         Safety Expiration Time: !!robotbuilder.data.properties.DoubleProperty {default: 0.1,
           name: Safety Expiration Time, validators: null, value: 0.1}
         Safety Enabled: !!robotbuilder.data.properties.BooleanProperty {default: true,
           name: Safety Enabled, validators: null, value: true}
       Base: Differential Drive
-      Name: Differential Drive 1
+      Name: Differential Drive
     Properties:
       Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
         name: Send to SmartDashboard, validators: null, value: false}
@@ -703,8 +727,13 @@ Properties:
     name: Simulation World File, validators: null, value: /usr/share/frcsim/worlds/GearsBotDemo.world}
   Wiring file location: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\admin\',
     extension: null, folder: true, name: Wiring file location, validators: null, value: 'C:\Users\sanjay\'}
+<<<<<<< HEAD
   Export Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\admin\FRCProjects',
     extension: null, folder: true, name: Export Directory, validators: null, value: .\}
+=======
+  Export Directory: !!robotbuilder.data.properties.FileProperty {default: 'C:\Users\sanja\FRCProjects',
+    extension: null, folder: true, name: Export Directory, validators: null, value: ./}
+>>>>>>> origin/sanjay
   Autonomous Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
     name: Autonomous Command, type: Command, validators: null, value: Autonomous Command}
 Base: Robot
