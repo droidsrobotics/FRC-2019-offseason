@@ -11,7 +11,7 @@ Children:
           default: Port.kUSB
           name: Port
           validators: [Port]
-          value: SPI.Port.kMXP
+          value: Port.kUSB
       Base: Nav X
       Name: Nav X
     Properties:
@@ -259,9 +259,59 @@ Children:
         default: []
         name: Constants
         validators: null
-        value: []
+        value: &id007 []
     Base: Subsystem
     Name: Lift
+  - Children:
+    - Children: []
+      Properties:
+        CAN ID: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id001
+          default: '2'
+          name: CAN ID
+          validators: *id002
+          value: '6'
+        Motor Type: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id003
+          default: MotorType.kBrushless
+          name: Motor Type
+          validators: *id004
+          value: MotorType.kBrushless
+      Base: Spark MAX
+      Name: intakeMotorLeft
+    - Children: []
+      Properties:
+        CAN ID: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id001
+          default: '2'
+          name: CAN ID
+          validators: *id002
+          value: '7'
+        Motor Type: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id003
+          default: MotorType.kBrushless
+          name: Motor Type
+          validators: *id004
+          value: MotorType.kBrushless
+      Base: Spark MAX
+      Name: intakeMotorRight
+    Properties:
+      Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Send to SmartDashboard, validators: null, value: false}
+      Default command parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Default command parameters
+        validators: null
+        value: []
+      Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Default Command, type: Command, validators: null, value: None}
+      Constants: !!robotbuilder.data.properties.ConstantsProperty
+        default: []
+        name: Constants
+        validators: null
+        value: *id007
+    Base: Subsystem
+    Name: Intake
   - Children: []
     Properties:
       Send to SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: false,
@@ -295,7 +345,7 @@ Children:
           validators: null
           value: []
         Button: !!robotbuilder.data.properties.ChoicesProperty
-          choices: &id007 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+          choices: &id008 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
             '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23',
             '24', '25', '26', '27', '28', '29', '30', '31', '32']
           default: '1'
@@ -306,10 +356,10 @@ Children:
           default: None
           name: Command
           type: Command
-          validators: &id008 [TypeDropdownSelected]
+          validators: &id009 [TypeDropdownSelected]
           value: LiftUp
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
-          choices: &id009 [whileHeld, whenPressed, whenReleased]
+          choices: &id010 [whileHeld, whenPressed, whenReleased]
           default: whileHeld
           name: When to Run
           validators: null
@@ -326,7 +376,7 @@ Children:
           validators: null
           value: []
         Button: !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id007
+          choices: *id008
           default: '1'
           name: Button
           validators: null
@@ -335,10 +385,10 @@ Children:
           default: None
           name: Command
           type: Command
-          validators: *id008
+          validators: *id009
           value: LiftDown
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id009
+          choices: *id010
           default: whileHeld
           name: When to Run
           validators: null
@@ -355,7 +405,7 @@ Children:
           validators: null
           value: []
         Button: !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id007
+          choices: *id008
           default: '1'
           name: Button
           validators: null
@@ -364,10 +414,10 @@ Children:
           default: None
           name: Command
           type: Command
-          validators: *id008
+          validators: *id009
           value: GoToTarget
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id009
+          choices: *id010
           default: whileHeld
           name: When to Run
           validators: null
@@ -598,6 +648,50 @@ Children:
       Run When Disabled: !!robotbuilder.data.properties.BooleanProperty {default: false,
         name: Run When Disabled, validators: null, value: false}
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: Intake}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: []
+        name: Parameter presets
+        validators: null
+        value: []
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: true}
+    Base: Command
+    Name: IntakeOpen
+  - Children: []
+    Properties:
+      Autonomous Selection: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Autonomous Selection, validators: null, value: false}
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value: []
+      Run When Disabled: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Run When Disabled, validators: null, value: false}
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: Intake}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: []
+        name: Parameter presets
+        validators: null
+        value: []
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: true}
+    Base: Command
+    Name: IntakeClose
+  - Children: []
+    Properties:
+      Autonomous Selection: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Autonomous Selection, validators: null, value: false}
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value: []
+      Run When Disabled: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Run When Disabled, validators: null, value: false}
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: Lift}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
         default: []
@@ -622,10 +716,10 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: LightDrive}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id010 []
+        default: &id011 []
         name: Parameter presets
         validators: null
-        value: *id010
+        value: *id011
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
@@ -644,10 +738,10 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: LightDrive}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id011 []
+        default: &id012 []
         name: Parameter presets
         validators: null
-        value: *id011
+        value: *id012
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command

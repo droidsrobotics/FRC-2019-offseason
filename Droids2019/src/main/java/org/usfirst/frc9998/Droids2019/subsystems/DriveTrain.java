@@ -84,7 +84,7 @@ public class DriveTrain extends Subsystem {
         addChild("Speed Controller Group Right",speedControllerGroupRight);
         
         
-        differentialDrive = new DifferentialDrive(speedControllerGroupLeft, driveLeftRear);
+        differentialDrive = new DifferentialDrive(speedControllerGroupLeft, speedControllerGroupRight);
         addChild("Differential Drive",differentialDrive);
         differentialDrive.setSafetyEnabled(true);
         differentialDrive.setExpiration(0.1);
