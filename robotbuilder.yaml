@@ -11,7 +11,7 @@ Children:
           default: Port.kUSB
           name: Port
           validators: [Port]
-          value: I2C.Port.kMXP
+          value: Port.kUSB
       Base: Nav X
       Name: Nav X
     Properties:
