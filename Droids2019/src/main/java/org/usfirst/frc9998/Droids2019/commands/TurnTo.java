@@ -58,7 +58,7 @@ public class TurnTo extends Command {
             correction = 0.6 * direction;
         } else {
             // if less than 20 degrees away, start doing proportional control
-            correction = (error/90.0) + ((0.4) * direction);
+            correction = 0.4*(error/90.0) + ((0.4) * direction);
         }
           // apply the correction as a motor speed
           Robot.driveTrain.setTankSpeed(correction, -1*correction);

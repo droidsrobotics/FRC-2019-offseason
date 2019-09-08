@@ -125,7 +125,7 @@ public class DriveTrain extends Subsystem {
     }
 
     public void setTankSpeed(double speed1, double speed2) {
-        differentialDrive.tankDrive(0.7*speed1, 0.7*speed2);
+        differentialDrive.tankDrive(0.85*speed1, 0.85*speed2);
     }
     
     @Override
