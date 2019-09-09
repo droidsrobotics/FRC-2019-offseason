@@ -70,9 +70,9 @@ public class OI {
         joystick2 = new Joystick(1);
         
         y2 = new JoystickButton(joystick2, 4);
-        y2.whileHeld(new LiftUp());
+        y2.whileHeld(new LiftRun(-1.0));
         a2 = new JoystickButton(joystick2, 2);
-        a2.whileHeld(new LiftDown());
+        a2.whileHeld(new LiftRun(1.0));
         x2 = new JoystickButton(joystick2, 1);
         x2.whileHeld(new GoToTarget());
         joystick1 = new Joystick(0);
@@ -84,19 +84,12 @@ public class OI {
         a1 = new JoystickButton(joystick1, 2);
         a1.whileHeld(new TurnTo(180));
         x1 = new JoystickButton(joystick1, 1);
-        x1.whileHeld(new TurnTo(270));
+        x1.whileHeld(new TurnTo(0));
 
 
         // SmartDashboard Buttons
-        SmartDashboard.putData("MoveForward", new MoveForward());
         SmartDashboard.putData("MoveOff", new MoveOff());
-        SmartDashboard.putData("JoystickControl", new JoystickControl());
-        SmartDashboard.putData("GyroMoveStraight", new GyroMoveStraight());
-        SmartDashboard.putData("PathPlanner", new PathPlanner());
         SmartDashboard.putData("GoToTarget", new GoToTarget());
-        SmartDashboard.putData("LiftUp", new LiftUp());
-        SmartDashboard.putData("LiftDown", new LiftDown());
-        SmartDashboard.putData("LiftOff", new LiftOff());
         SmartDashboard.putData("GreenLightOn", new GreenLightOn());
         SmartDashboard.putData("GreenLightOff", new GreenLightOff());
 
