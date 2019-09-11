@@ -148,8 +148,8 @@ public class DriveTrain extends Subsystem {
 
     public void arcadeDrive(double xSpeed, double zRotation){
         differentialDrive.arcadeDrive(xSpeed, zRotation);
-        System.out.println("Left encoder:"+ getEncoderLeft());
-        System.out.println("Right encoder:"+ getEncoderRight());
+        // System.out.println("Left encoder:"+ getEncoderLeft());
+        // System.out.println("Right encoder:"+ getEncoderRight());
     }
 
     public double getEncoderLeft() {

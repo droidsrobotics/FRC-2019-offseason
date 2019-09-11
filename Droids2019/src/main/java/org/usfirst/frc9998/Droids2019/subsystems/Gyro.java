@@ -70,7 +70,7 @@ public class Gyro extends Subsystem {
     }
 
     public double readAngle() {
-      System.out.println("Angle: "+ (navX.getAngle() - initialAngle));
+      // System.out.println("Angle: "+ (navX.getAngle() - initialAngle));
       return navX.getAngle() - initialAngle;
     }
 
