@@ -99,16 +99,16 @@ public class DriveTrain extends Subsystem {
         driveRightRearEncoder  = driveRightRear.getEncoder();
         driveRightFrontEncoder = driveRightFront.getEncoder();
 
-		driveLeftRear.setIdleMode(IdleMode.kBrake);
+		driveLeftRear.setIdleMode(IdleMode.kCoast);
 		driveLeftRear.setSmartCurrentLimit(90);
 
-		driveLeftFront.setIdleMode(IdleMode.kBrake);
+		driveLeftFront.setIdleMode(IdleMode.kCoast);
         driveLeftFront.setSmartCurrentLimit(90);
         
-		driveRightFront.setIdleMode(IdleMode.kBrake);
+		driveRightFront.setIdleMode(IdleMode.kCoast);
 		driveRightFront.setSmartCurrentLimit(90);
 
-		driveRightRear.setIdleMode(IdleMode.kBrake);
+		driveRightRear.setIdleMode(IdleMode.kCoast);
         driveRightRear.setSmartCurrentLimit(90);
 
     }

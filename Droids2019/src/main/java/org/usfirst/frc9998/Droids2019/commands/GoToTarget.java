@@ -43,9 +43,35 @@ public class GoToTarget extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        double dx = Robot.cVReciever.getData();
-        System.out.println("CVReciever: "+dx);
-        Robot.driveTrain.setTankSpeed(dx/320.0, -dx/320.0);
+        Robot.lightDrive.onGreenLight();
+
+        double track = Robot.cVReciever.getData()*27.0/320.0;
+        // Robot.driveTrain.setTankSpeed(track/320.0, -track/320.0);
+
+        double baseSpeed;
+        double correction;
+    
+        if (track != 0) {
+          // we only move if we see a target
+          if ((Math.abs(track) < 5)) {
+            // move into the target if and only if the angular error is less
+            // than 5 degrees and the tape only covers 1.7% of the frame
+            correction = track/27.0;
+            baseSpeed = 0.7; // set speed to move into target
+            System.out.println("move in!!");
+          } else {
+            // otherwise turn towards the target (i.e. set speed = 0)
+            correction = track/27.0+(Math.abs(track)/track)*0.3;
+            baseSpeed = 0.0;
+          }
+    
+          System.out.println("correction: "+correction);
+          Robot.driveTrain.setTankSpeed(
+          ((baseSpeed - correction))*0.4,
+          ((baseSpeed + correction))*0.4);
+
+        }
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -57,11 +83,13 @@ public class GoToTarget extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
+        Robot.lightDrive.offGreenLight();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
+        Robot.lightDrive.offGreenLight();
     }
 }

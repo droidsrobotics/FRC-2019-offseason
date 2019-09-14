@@ -49,7 +49,30 @@ public class JoystickControl extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.driveTrain.arcadeDrive(Math.pow(joystick1.getRawAxis(1),3.0) * -0.5, Math.pow(joystick1.getRawAxis(2),3.0)*0.5);
+        int DPAD = joystick1.getPOV();
+        double target = 0;
+        if (DPAD != -1) {
+          // This handles the angles as special cases and makes them align
+          // correctly to the Rocket
+          if ((DPAD == 45) || (DPAD == 225)) {
+            target = DPAD-16.25;
+            TurnTo turn = new TurnTo(target);
+            turn.start();
+          } else {
+            if ((DPAD == 135) || (DPAD == 305)) {
+              target = DPAD+16.25;
+              TurnTo turn = new TurnTo(target);
+              turn.start();
+            }
+            else {
+              // this handles the normal straight, back, left, right directions
+              TurnTo turn = new TurnTo(DPAD);
+              turn.start();
+            }
+          }
+        } else {
+            Robot.driveTrain.arcadeDrive(Math.pow(joystick1.getRawAxis(1),1.0) * -0.5, Math.pow(joystick1.getRawAxis(2),1.0)*0.5);
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
