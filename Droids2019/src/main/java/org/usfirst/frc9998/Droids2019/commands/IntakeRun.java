@@ -46,6 +46,7 @@ public class IntakeRun extends Command {
     @Override
     protected void execute() {
         Robot.intake.run(m_speed);
+        System.out.println("intake = " + m_speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

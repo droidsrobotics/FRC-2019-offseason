@@ -22,14 +22,22 @@
   </head>
   <body>
     <h1>Wiring</h1>
-                            <h2>PWMs</h2>
+                    <h2>DIO</h2>
+        <table><tr>
+            <th class="pound">#</th>
+            <th>Subsystem</th>
+            <th>Sensor</th></tr>
+                                                                        <tr><td>0</td><td>Lift </td><td>Limit Switch Up</td><td></td></tr>
+                                                                                              <tr><td>1</td><td>Lift </td><td>Limit Switch Down</td><td></td></tr>
+                                                                                                                                                                                                                                                                                                                                             </table>
+                    <h2>PWMs</h2>
         <table><tr>
             <th class="pound">#</th>
             <th>Subsystem</th>
             <th>Motor</th>
             <th>Type</th></tr>
-                                                                            <tr><td>2</td><td>IntakeConnect </td><td>Left</td><td>Servo</td></tr>
-                                                          <tr><td>3</td><td>IntakeConnect </td><td>Right</td><td>Servo</td></tr>
+                                                                            <tr><td>2</td><td>IntakeConnect </td><td>intakeConnectLeft</td><td>Servo</td></tr>
+                                                          <tr><td>3</td><td>IntakeConnect </td><td>intakeConnectRight</td><td>Servo</td></tr>
                                                                                                                                                                                                                                                                                                      </table>
      
                 <h2>CAN IDs</h2>
@@ -46,7 +54,8 @@
                                                           <tr><td>5</td><td>Lift </td><td>liftMotor</td><td>Spark MAX</td></tr>
                                                           <tr><td>6</td><td>Intake </td><td>intakeRight</td><td>Spark MAX</td></tr>
                                                           <tr><td>7</td><td>Intake </td><td>intakeLeft</td><td>Spark MAX</td></tr>
-                                                                                                                                                                                                                                                 </table>
+                                                          <tr><td>8</td><td>Wrist </td><td>wristMotor</td><td>Spark MAX</td></tr>
+                                                                                                                                                                                                                                     </table>
     
             
                         

@@ -110,7 +110,7 @@ public class CVReciever extends Subsystem {
             //System.out.println("Buf Array: "+buf.array());
             //System.out.println("Buf String: "+new String(buf.array()));
             double dataFinal = Double.parseDouble(new String(buf.array()).split(";")[0]);
-            System.out.println("CVReciever: "+dataFinal);
+            //System.out.println("CVReciever: "+dataFinal);
             return dataFinal;
 
         } catch(Exception e) {
