@@ -51,7 +51,7 @@ public class WristJoystick extends Command {
     @Override
     protected void execute() {
         Robot.wrist.run(joystick2.getRawAxis(3));
-        System.out.println("wrist = " + joystick2.getRawAxis(3));
+        // System.out.println("wrist = " + joystick2.getRawAxis(3));
     }
 
     // Make this return true when this Command no longer needs to run execute()

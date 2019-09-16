@@ -48,6 +48,7 @@ public class CVReciever extends Subsystem {
     private static DatagramChannel channel;
 
     public static void initSocket() throws Exception {
+        buf = java.nio.ByteBuffer.allocate(1500);
         inFromUser = new BufferedReader(new InputStreamReader(System.in));
         // clientSocket = new DatagramSocket();
         IPAddress = new InetSocketAddress("10.99.98.10", 9998);
@@ -57,7 +58,6 @@ public class CVReciever extends Subsystem {
         channel.socket().bind(new InetSocketAddress(9998));
         channel.connect(IPAddress);
         channel.configureBlocking(false);
-        buf = java.nio.ByteBuffer.allocate(1500);
     }
 
 
@@ -104,17 +104,21 @@ public class CVReciever extends Subsystem {
     {
         try {
             buf.clear();
-            channel.read(buf);
-            //System.out.println("Socket buf length: "+channel.read(buf));
+            int len = channel.read(buf);
+            System.out.println("Socket buf length: "+ len);
+            if (len > 0) {
             //System.out.println("Decoded: "+Base64.getDecoder().decode(buf.array()));
             //System.out.println("Buf Array: "+buf.array());
             //System.out.println("Buf String: "+new String(buf.array()));
-            double dataFinal = Double.parseDouble(new String(buf.array()).split(";")[0]);
+                double dataFinal = Double.parseDouble(new String(buf.array()).split(";")[0]);
             //System.out.println("CVReciever: "+dataFinal);
-            return dataFinal;
+                return dataFinal;
+            } else {
+                return(0.0); // should save last data and return that
+            }
 
         } catch(Exception e) {
-            System.out.println("error "+e);
+            System.out.println("error1 "+e);
             return -1.0;
         }
         

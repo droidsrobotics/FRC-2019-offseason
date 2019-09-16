@@ -48,7 +48,8 @@ public class LiftJoystick extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        //System.out.println("raw axis joy1,1:"+joystick2.getRawAxis(1));
+        // System.out.println("raw axis joy1,1:"+joystick2.getRawAxis(1));
+
         Robot.lift.setSpeed(joystick2.getRawAxis(1));
     }
 
