@@ -105,16 +105,16 @@ public class CVReciever extends Subsystem {
         try {
             buf.clear();
             int len = channel.read(buf);
-            System.out.println("Socket buf length: "+ len);
             if (len > 0) {
-            //System.out.println("Decoded: "+Base64.getDecoder().decode(buf.array()));
-            //System.out.println("Buf Array: "+buf.array());
-            //System.out.println("Buf String: "+new String(buf.array()));
+                // System.out.println("Socket buf length: "+ len);
+                //System.out.println("Decoded: "+Base64.getDecoder().decode(buf.array()));
+                //System.out.println("Buf Array: "+buf.array());
+                //System.out.println("Buf String: "+new String(buf.array()));
                 double dataFinal = Double.parseDouble(new String(buf.array()).split(";")[0]);
-            //System.out.println("CVReciever: "+dataFinal);
+                //System.out.println("CVReciever: "+dataFinal);
                 return dataFinal;
             } else {
-                return(0.0); // should save last data and return that
+                return(-1.0); // should save last data and return that
             }
 
         } catch(Exception e) {

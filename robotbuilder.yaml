@@ -482,8 +482,8 @@ Children:
           name: Parameters
           validators: null
           value:
-          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: change,
-            type: double, value: '0.1'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: setPoint,
+            type: double, value: '-0.49'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id011
           default: '1'
@@ -503,7 +503,7 @@ Children:
           validators: null
           value: whenPressed
       Base: Joystick Button
-      Name: X intake connect expand
+      Name: X intake connect  grab panel
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -513,8 +513,8 @@ Children:
           name: Parameters
           validators: null
           value:
-          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: speed,
-            type: double, value: '1.0'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: change,
+            type: double, value: '0.05'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id011
           default: '1'
@@ -526,7 +526,7 @@ Children:
           name: Command
           type: Command
           validators: *id012
-          value: LiftRun
+          value: IntakeConnectChange
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id013
           default: whileHeld
@@ -534,7 +534,7 @@ Children:
           validators: null
           value: whileHeld
       Base: Joystick Button
-      Name: A lift up
+      Name: A intake connect shrink
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -544,8 +544,8 @@ Children:
           name: Parameters
           validators: null
           value:
-          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: change,
-            type: double, value: '-0.1'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: setPoint,
+            type: double, value: '-1.0'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id011
           default: '1'
@@ -565,7 +565,7 @@ Children:
           validators: null
           value: whenPressed
       Base: Joystick Button
-      Name: B intake connect shrink
+      Name: B intake connect grab ball
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -575,8 +575,8 @@ Children:
           name: Parameters
           validators: null
           value:
-          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: speed,
-            type: double, value: '-1.0'}
+          - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: setPoint,
+            type: double, value: '-0.65'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id011
           default: '1'
@@ -588,7 +588,7 @@ Children:
           name: Command
           type: Command
           validators: *id012
-          value: LiftRun
+          value: IntakeConnectSet
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id013
           default: whileHeld
@@ -596,7 +596,7 @@ Children:
           validators: null
           value: whileHeld
       Base: Joystick Button
-      Name: Y lift down
+      Name: Y intake connect hold panel
     - Children: []
       Properties:
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
@@ -949,6 +949,29 @@ Children:
         validators: null
         value:
         - !!robotbuilder.data.properties.ParameterDescriptor {name: change, type: double}
+      Run When Disabled: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Run When Disabled, validators: null, value: false}
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: IntakeConnect}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: []
+        name: Parameter presets
+        validators: null
+        value: []
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: false}
+    Base: Instant Command
+    Name: IntakeConnectChange
+  - Children: []
+    Properties:
+      Autonomous Selection: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Autonomous Selection, validators: null, value: false}
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: setPoint, type: double}
       Run When Disabled: !!robotbuilder.data.properties.BooleanProperty {default: false,
         name: Run When Disabled, validators: null, value: false}
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
