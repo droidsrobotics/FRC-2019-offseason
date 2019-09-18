@@ -607,7 +607,7 @@ Children:
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: speed,
-            type: double, value: '-1.0'}
+            type: double, value: '-0.5'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id011
           default: '1'
@@ -638,7 +638,7 @@ Children:
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: speed,
-            type: double, value: '1.0'}
+            type: double, value: '0.5'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id011
           default: '1'
