@@ -70,9 +70,9 @@ public class OI {
         joystick2 = new Joystick(1);
         
         joystickButton6 = new JoystickButton(joystick2, 6);
-        joystickButton6.whileHeld(new IntakeRun(1.0));
+        joystickButton6.whileHeld(new IntakeRun(0.5));
         joystickButton5 = new JoystickButton(joystick2, 5);
-        joystickButton5.whileHeld(new IntakeRun(-1.0));
+        joystickButton5.whileHeld(new IntakeRun(-0.5));
         yintakeconnectholdpanel = new JoystickButton(joystick2, 4);
         yintakeconnectholdpanel.whileHeld(new IntakeConnectSet(-0.65));
         bintakeconnectgrabball = new JoystickButton(joystick2, 3);
