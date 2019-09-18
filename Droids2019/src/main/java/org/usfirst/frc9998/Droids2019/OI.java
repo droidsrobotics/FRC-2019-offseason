@@ -78,9 +78,9 @@ public class OI {
         bintakeconnectgrabball = new JoystickButton(joystick2, 3);
         bintakeconnectgrabball.whenPressed(new IntakeConnectSet(-1.0));
         aintakeconnectshrink = new JoystickButton(joystick2, 2);
-        aintakeconnectshrink.whileHeld(new IntakeConnectChange(0.05));
+        aintakeconnectshrink.whenPressed(new IntakeConnectChange(0.05));
         xintakeconnectgrabpanel = new JoystickButton(joystick2, 1);
-        xintakeconnectgrabpanel.whenPressed(new IntakeConnectSet(-0.49));
+        xintakeconnectgrabpanel.whenPressed(new IntakeConnectSet(-0.45));
         joystick1 = new Joystick(0);
         
         x1 = new JoystickButton(joystick1, 1);
