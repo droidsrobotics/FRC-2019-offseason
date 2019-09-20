@@ -110,9 +110,15 @@ public class LightDrive extends Subsystem {
         // ldrive_serial.SetColor(1, new Color(0,0,0), 0.0);
         // ldrive_serial.Update();
 
+        // Use the following:
         ldrive_pwm.SetColor(1, new Color(0,0,0));
         ldrive_pwm.SetLevel(1, 0);
         ldrive_pwm.Update();
+        // End here
+
+        // ldrive_pwm.SetColor(1, new Color(0,255,0));
+        // ldrive_pwm.SetLevel(1, 255);
+        // ldrive_pwm.Update();
 
         // ldrive_can.SetColor(1, new Color(0,0,0), 0.0);
         // ldrive_can.Update();

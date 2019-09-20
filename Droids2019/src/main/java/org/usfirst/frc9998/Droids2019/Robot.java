@@ -133,29 +133,29 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        lightDrive.offGreenLight();
+        lightDrive.onGreenLight();
 
-        Trajectory left_trajectory;
-        Trajectory right_trajectory;
+        // Trajectory left_trajectory;
+        // Trajectory right_trajectory;
 
-        try {
-            left_trajectory = PathfinderFRC.getTrajectory(k_path_name + ".left");
-            right_trajectory = PathfinderFRC.getTrajectory(k_path_name + ".right");
-            m_left_follower = new EncoderFollower(left_trajectory);
-            m_right_follower = new EncoderFollower(right_trajectory);
+        // try {
+        //     left_trajectory = PathfinderFRC.getTrajectory(k_path_name + ".left");
+        //     right_trajectory = PathfinderFRC.getTrajectory(k_path_name + ".right");
+        //     m_left_follower = new EncoderFollower(left_trajectory);
+        //     m_right_follower = new EncoderFollower(right_trajectory);
         
-            m_left_follower.configureEncoder((int) this.driveTrain.getEncoderLeft(), k_ticks_per_rev, k_wheel_diameter);
-            // You must tune the PID values on the following line!
-            m_left_follower.configurePIDVA(1.0, 0.0, 0.0, 1 / k_max_velocity, 0);
+        //     m_left_follower.configureEncoder((int) this.driveTrain.getEncoderLeft(), k_ticks_per_rev, k_wheel_diameter);
+        //     // You must tune the PID values on the following line!
+        //     m_left_follower.configurePIDVA(1.0, 0.0, 0.0, 1 / k_max_velocity, 0);
         
-            m_right_follower.configureEncoder((int) this.driveTrain.getEncoderRight(), k_ticks_per_rev, k_wheel_diameter);
-            // You must tune the PID values on the following line!
-            m_right_follower.configurePIDVA(1.0, 0.0, 0.0, 1 / k_max_velocity, 0);
+        //     m_right_follower.configureEncoder((int) this.driveTrain.getEncoderRight(), k_ticks_per_rev, k_wheel_diameter);
+        //     // You must tune the PID values on the following line!
+        //     m_right_follower.configurePIDVA(1.0, 0.0, 0.0, 1 / k_max_velocity, 0);
             
-        } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        // } catch (IOException e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
 
     
 
@@ -200,7 +200,7 @@ public class Robot extends TimedRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        lightDrive.offGreenLight();
+        lightDrive.onGreenLight();
         if (autonomousCommand != null) autonomousCommand.cancel();
     }
 

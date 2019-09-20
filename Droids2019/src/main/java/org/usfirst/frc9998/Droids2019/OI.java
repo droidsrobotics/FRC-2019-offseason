@@ -87,11 +87,11 @@ public class OI {
         joystick1 = new Joystick(0);
         
         joystickButton12 = new JoystickButton(joystick1, 2);
-        joystickButton12.whileHeld(new LiftSet(-10));
+        joystickButton12.whileHeld(new LiftSet(-207));
         joystickButton13 = new JoystickButton(joystick1, 3);
-        joystickButton13.whileHeld(new LiftSet(-125));
+        joystickButton13.whileHeld(new LiftSet(-158));
         joystickButton14 = new JoystickButton(joystick1, 4);
-        joystickButton14.whileHeld(new LiftSet(-280));
+        joystickButton14.whileHeld(new LiftSet(-90));
         x1 = new JoystickButton(joystick1, 1);
         x1.whileHeld(new GoToTarget());
 

@@ -473,7 +473,7 @@ Children:
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: position,
-            type: double, value: '-280'}
+            type: double, value: '-90'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id011
           default: '1'
@@ -504,7 +504,7 @@ Children:
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: position,
-            type: double, value: '-125'}
+            type: double, value: '-158'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id011
           default: '1'
@@ -535,7 +535,7 @@ Children:
           validators: null
           value:
           - !!robotbuilder.data.properties.ValuedParameterDescriptor {name: position,
-            type: double, value: '-10'}
+            type: double, value: '-207'}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id011
           default: '1'
@@ -1202,6 +1202,29 @@ Children:
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
     Name: LiftSet
+  - Children: []
+    Properties:
+      Autonomous Selection: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Autonomous Selection, validators: null, value: false}
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value:
+        - !!robotbuilder.data.properties.ParameterDescriptor {name: position, type: double}
+      Run When Disabled: !!robotbuilder.data.properties.BooleanProperty {default: false,
+        name: Run When Disabled, validators: null, value: false}
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: Wrist}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: &id017 []
+        name: Parameter presets
+        validators: null
+        value: *id017
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: false}
+    Base: Command
+    Name: WristSet
   Properties: {}
   Base: Commands
   Name: Commands

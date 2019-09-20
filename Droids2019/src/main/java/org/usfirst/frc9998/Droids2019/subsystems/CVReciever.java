@@ -47,6 +47,8 @@ public class CVReciever extends Subsystem {
     private static BufferedReader inFromUser;
     private static DatagramChannel channel;
 
+    public double dataOut = 0.0;
+
     public static void initSocket() throws Exception {
         buf = java.nio.ByteBuffer.allocate(1500);
         inFromUser = new BufferedReader(new InputStreamReader(System.in));
@@ -112,6 +114,7 @@ public class CVReciever extends Subsystem {
                 //System.out.println("Buf String: "+new String(buf.array()));
                 double dataFinal = Double.parseDouble(new String(buf.array()).split(";")[0]);
                 //System.out.println("CVReciever: "+dataFinal);
+                dataOut = dataFinal;
                 return dataFinal;
             } else {
                 return(-1.0); // should save last data and return that
