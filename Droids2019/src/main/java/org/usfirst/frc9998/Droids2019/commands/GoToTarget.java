@@ -46,7 +46,7 @@ public class GoToTarget extends Command {
         Robot.lightDrive.onGreenLight();
 
         double track = Robot.cVReciever.getData()*27.0/320.0;
-        System.out.println("CVReciever: "+track);
+        System.out.println("CVReciever: "+track*320.0/27.0);
         // Robot.driveTrain.setTankSpeed(track/320.0, -track/320.0);
 
         double baseSpeed;
@@ -58,7 +58,8 @@ public class GoToTarget extends Command {
             // move into the target if and only if the angular error is less
             // than 5 degrees and the tape only covers 1.7% of the frame
             correction = track/27.0;
-            baseSpeed = 0.7; // set speed to move into target
+            baseSpeed = 0.0; // set speed to move into target
+            // baseSpeed = 0.7; // set speed to move into target
             System.out.println("move in!!");
           } else {
             // otherwise turn towards the target (i.e. set speed = 0)
@@ -68,8 +69,8 @@ public class GoToTarget extends Command {
     
           System.out.println("correction: "+correction);
           Robot.driveTrain.setTankSpeed(
-          ((baseSpeed - correction))*0.4,
-          ((baseSpeed + correction))*0.4);
+          ((baseSpeed - correction))*0.3,
+          ((baseSpeed + correction))*0.3);
 
         }
 
